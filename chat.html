@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>Tile-based Illusion Barrier</title>
+		<script src="/socket.io/socket.io.js"></script>
+	</head>
+	<body>
+		<!--canvas id="mycanvas" width="288" height="288">HTML canvas</canvas-->
+		<div id="mychat"></div>
+		<input id="myinput"></input>
+		<button id="mysubmit" onclick="submit();">Send</button>
+		<script>
+			var mycanvas = document.getElementById("mycanvas");
+			var mychat = document.getElementById("mychat");
+			var myinput = document.getElementById("myinput");
+			function randselect(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+			function R10() { return randselect("1234567890"); }
+			var mynick = "luser" + R10() + R10() + R10() + R10();
+			var str = window.location.search + "&";
+			var myroom = str.substring(str.indexOf("room=")+5, str.indexOf("&"));
+
+			function submit(){
+				var text = myinput.value;
+				if (text.split(" ")[0] == "/nick"){
+					mynick = text.split(" ")[1];
+					socket.emit('identity', {nick: text.split(" ")[1]});
+				} else if (text.split(" ")[0] == "/lusers"){
+					socket.emit('lusers', {});
+				} else {
+					socket.emit('say', { text: text });
+				}
+				myinput.value = "";
+			}
+
+			var socket = io('http://localhost:8080');
+			socket.on('ready', function (data) {
+				socket.emit('identity', {nick: mynick, room: myroom});
+			});
+			socket.on('say', function (data) {
+				if (data.speaker)
+					mychat.innerHTML += removeXSS(data.speaker) + ": " + removeXSS(data.text) + "<br/>";
+				else
+					mychat.innerHTML += removeXSS(data.text) + "<br/>";
+			});
+
+			function removeXSS(str){
+				return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+			}
+		</script>
+	</body>
+</html>
