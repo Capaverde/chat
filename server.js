@@ -24,10 +24,10 @@ io.on('connection', function (socket) {
 		} else {
 			io.to(socket.id).emit('say', {text: "Commands are /nick <nickname> and /join <channelname>"});
 		}
-		if (data.nick && data.nick.length >= 3 && data.nick <= 16)
+		if (data.nick && data.nick.length >= 3 && data.nick.length <= 16)
 			socket.nickname = data.nick;
 		else
-			io.to(socket.id).emit('say', {text: "Invalid nickname format. It must be a 3 to 16 characters word.");
+			io.to(socket.id).emit('say', {text: "Invalid nickname format. It must be a 3 to 16 characters word."});
 	});
 	socket.on('join', function (data) {
 		if (data.room){
@@ -35,7 +35,7 @@ io.on('connection', function (socket) {
 				socket.leave(socket.room);
 			}
 			socket.join(data.room);
-			io.to(data.room).emit('say', {text: data.nick + " has joined " + data.room}); 
+			io.to(data.room).emit('say', {text: socket.nickname + " has joined " + data.room}); 
 			socket.room = data.room;			
 		}	
 	});
