@@ -6,15 +6,12 @@ var path = require('path');
 var myio = require('socket.io');
 
 var srv = http.createServer(function (req, res) {
-	var filePath = path.join(__dirname, 'TB.html');
-	res.writeHead(200, { 'Content-Type' : 'text/html' });
-	fs.createReadStream(filePath).pipe(res);
+	res.end("ok");
 });
 
 var io = myio(srv);
 
-srv.listen(8080);
-var uselesshash = {};
+srv.listen(process.argv[2]);
 
 io.on('connection', function (socket) {
 	socket.emit('ready', {});

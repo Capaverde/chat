@@ -1,0 +1,27 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "chat",
+  "main": "server.js",
+  "dependencies": {
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Capaverde/chat.git"
+  },
+  "keywords": [
+    "chat"
+  ],
+  "author": "Capaverde",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/Capaverde/chat/issues"
+  },
+  "homepage": "https://github.com/Capaverde/chat#readme"
+}
