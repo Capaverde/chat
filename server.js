@@ -4,7 +4,7 @@ var http = require("http");
 var fs = require('fs');
 var path = require('path');
 var myio = require('socket.io');
-myport = process.argv[2] || "80";
+var myport = process.argv[2] || process.env.PORT || "8080";
 
 var srv = http.createServer(function (req, res) {
 	res.writeHead(200, {'Content-Type' : 'text/plain'});
