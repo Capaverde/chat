@@ -4,14 +4,19 @@ var http = require("http");
 var fs = require('fs');
 var path = require('path');
 var myio = require('socket.io');
+myport = process.argv[2] || "80";
 
 var srv = http.createServer(function (req, res) {
+	res.writeHead(200, {'Content-Type' : 'text/plain'});
 	res.end("ok");
 });
 
 var io = myio(srv);
 
-srv.listen(process.argv[2]);
+
+
+srv.listen(myport);
+console.log("Listening on port " + myport);
 
 io.on('connection', function (socket) {
 	socket.emit('ready', {});
