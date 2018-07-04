@@ -8,7 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node server.js",
+    "test": "echo \"No testing script found.\"",
     "start": "node server.js"
   },
   "repository": {
