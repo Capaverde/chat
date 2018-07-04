@@ -1,5 +1,3 @@
-//chat
-
 var http = require("http");
 var fs = require('fs');
 var path = require('path');
@@ -7,8 +5,15 @@ var myio = require('socket.io');
 var myport = process.argv[2] || process.env.PORT || "8080";
 
 var srv = http.createServer(function (req, res) {
+	console.log(req.url);
 	res.writeHead(200, {'Content-Type' : 'text/plain'});
-	res.end("ok");
+	if (req.url == "/client.js"){
+		fs.createReadStream(__dirname + "/client.js").pipe(res);
+	} else if (req.url == "/server.js"){
+		fs.createReadStream(__dirname + "/server.js").pipe(res);
+	} else {
+		res.end("ok");
+	}
 });
 
 var io = myio(srv);
