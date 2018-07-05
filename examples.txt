@@ -1,0 +1,28 @@
+$ node server.js 8080 &
+[1] 2151
+$ node client.js
+To connect to a server, type /connect <address>.
+/connect localhost:8080
+Commands are /nick <nickname> and /join <channelname>
+/join programmers
+user3175 has joined programmers
+/nick capaverde
+user3175 is now known as capaverde
+/join otherchannel
+capaverde has joined otherchannel
+/join etc
+capaverde has joined etc
+test
+capaverde: test
+^C
+$ node client.js
+To connect to a server, type /connect <address>.
+/connect shellchat.herokuapp.com
+Commands are /nick <nickname> and /join <channelname>
+/join programmers
+user3747 has joined programmers
+/nick capaverde
+user3747 is now known as capaverde
+test
+capaverde: test
+^C
