@@ -11,17 +11,8 @@
     "test": "echo \"No testing script found.\"",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Capaverde/chat.git"
-  },
   "keywords": [
     "chat"
   ],
-  "author": "Capaverde",
-  "license": "WTFPL",
-  "bugs": {
-    "url": "https://github.com/Capaverde/chat/issues"
-  },
-  "homepage": "https://github.com/Capaverde/chat#readme"
+  "license": "WTFPL"
 }
