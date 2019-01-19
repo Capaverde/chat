@@ -11,12 +11,12 @@ var srv = http.createServer(function (req, res) {
 	} else if (req.url == "/server.js"){
 		res.writeHead(200, {'Content-Type' : 'text/plain'});
 		fs.createReadStream(__dirname + "/server.js").pipe(res);
-	} else if (req.url == "/examples.txt"){
+	} else if (req.url == "/package.json"){
 		res.writeHead(200, {'Content-Type' : 'text/plain'});
-		fs.createReadStream(__dirname + "/examples.txt").pipe(res);
+		fs.createReadStream(__dirname + "/package.json").pipe(res);
 	} else {
 		res.writeHead(200, {'Content-Type' : 'text/html'});
-		res.end("* <a href=\"/server.js\">/server.js</a><br/>* <a href=\"/client.js\">/client.js</a><br/>* <a href=\"/examples.txt\">/examples.txt</a>");
+		res.end("* <a href=\"/server.js\">/server.js</a><br/>* <a href=\"/client.js\">/client.js</a><br/>* <a href=\"/package.json\">/package.json</a>");
 	}
 });
 
