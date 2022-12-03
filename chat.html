@@ -8,8 +8,8 @@
 function randselect(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 function R() { return randselect("1234567890"); }
 
-myserver = "localhost:8080";
-myroom = "";
+myserver = "shellchat.herokuapp.com";
+myroom = "shellchat";
 mynick = "user" + R() + R() + R() + R();
 socket = false;
 
@@ -32,9 +32,10 @@ function interface (line) {
 }
 
 function setupsocket(){
-	socket = io("http://" + myserver);
+	socket = io(window.location.origin) //io("http://" + myserver);
 	socket.on('ready', function (data) {
 		socket.emit('identity', {nick: mynick});
+                socket.emit('join', {room: "VT"});
 	});
 	socket.on('say', function (data) {
 		if (data.speaker){
@@ -61,7 +62,8 @@ function removeEntities(html){
 }
 
 
-consolelog("To connect to a server, type /connect <address>.");
+//consolelog("To connect to a server, type /connect <address>.");
+consolelog("To change your nickname, type /nick <nickname>.");
 
 
 
