@@ -1,0 +1,72 @@
+<html>
+<script src="/socket.io/socket.io.js"></script>
+<div id="chatlog"></div>
+<input id="msgbox" type="text"></input>
+<button onclick="entermsg()">Enter</button>
+
+<script>
+function randselect(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+function R() { return randselect("1234567890"); }
+
+myserver = "localhost:8080";
+myroom = "";
+mynick = "user" + R() + R() + R() + R();
+socket = false;
+
+//interface = readline.createInterface({ input : process.stdin, output : process.stdout });
+
+
+function interface (line) {
+	if (line.split(" ")[0] == "/nick"){
+		mynick = line.split(" ")[1];
+		socket.emit('identity', {nick: line.split(" ")[1]});
+	} else if (line.split(" ")[0] == "/connect"){
+		myserver = line.split(" ")[1];
+		setupsocket();
+	} else if (line.split(" ")[0] == "/join"){
+		myroom = line.split(" ")[1];
+		socket.emit('join', {room: line.split(" ")[1]});
+	} else {
+		socket.emit('say', { text: line });		
+	}
+}
+
+function setupsocket(){
+	socket = io("http://" + myserver);
+	socket.on('ready', function (data) {
+		socket.emit('identity', {nick: mynick});
+	});
+	socket.on('say', function (data) {
+		if (data.speaker){
+			consolelog(data.speaker + ": " + data.text);
+		} else {
+			consolelog(data.text);
+		}
+	});
+}
+
+msgbox = document.getElementById("msgbox");
+
+function entermsg(){
+  interface(msgbox.value);
+  msgbox.value="";
+}
+
+chatlog = document.getElementById("chatlog");
+function consolelog(text){
+  chatlog.innerHTML += removeEntities(text) + "<br/>";
+}
+function removeEntities(html){
+  return html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/, "&gt;");
+}
+
+
+consolelog("To connect to a server, type /connect <address>.");
+
+
+
+</script>
+
+
+
+</html>
